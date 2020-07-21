@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-WORKDIR /usr
+WORKDIR /usr/local/src
 
 RUN apt-get -qq update && apt-get install -q -y software-properties-common
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y
@@ -13,9 +13,6 @@ RUN apt -y install libboost-all-dev
 RUN apt -y install libtbb-dev
 
 # Download and install pagmo
-#COPY pagmo2-2.15.0/ /usr/include/
-#RUN ls -a /usr/include
-#RUN ls /usr/include/pagmo2-2.15.0
 RUN wget https://github.com/esa/pagmo2/archive/v2.15.0.tar.gz && \
     tar zxf v2.15.0.tar.gz -C /usr/include/ && \
     cd /usr/include && \
@@ -27,8 +24,6 @@ RUN wget https://github.com/esa/pagmo2/archive/v2.15.0.tar.gz && \
     cmake --build . && \
     cmake  --build . --target install
 
-COPY hypervolume_tutorial.cpp /usr/local/src/
-COPY getting_started.cpp /usr/local/src/
 COPY maker.cpp /usr/local/src/
 
 ENV LD_LIBRARY_PATH /usr/local/lib
